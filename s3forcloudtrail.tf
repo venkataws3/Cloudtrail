@@ -17,7 +17,32 @@ resource "aws_cloudtrail" "prototype_ct" {
 resource "aws_s3_bucket_policy" "tsys_bucket_policy_for_cloudtrail" {
     bucket= "${module.s3_bucket_for_cloudtrail.bucket_id}"
     policy = <<POLICY
-    {
-
-    }
+      {
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "AWSCloudTrailAclCheck20150319",
+            "Effect": "Allow",
+            "Principal": {
+                "Service": "cloudtrail.amazonaws.com"
+            },
+            "Action": "s3:GetBucketAcl",
+            "Resource": "arn:aws:s3:::${module.s3_bucket_for_cloudtrail.bucket_id}"
+        },
+        {
+            "Sid": "AWSCloudTrailWrite20150319",
+            "Effect": "Allow",
+            "Principal": {
+                "Service": "cloudtrail.amazonaws.com"
+            },
+            "Action": "s3:PutObject",
+            "Resource": "arn:aws:s3:::${module.s3_bucket_for_cloudtrail.bucket_id}/AWSLogs/*",
+            "Condition": {
+                "StringEquals": {
+                    "s3:x-amz-acl": "bucket-owner-full-control"
+                }
+            }
+        }
+    ]
+ }
 }
