@@ -18,9 +18,6 @@ variable "including_global_services" {
   default=true
   description = "including the logging of global servcies like IAM,Billing"
 }
-variable "log_destination_bucket" {
-  type="string"
-}
 variable "s3_aws_region" {
   type="string"
 }

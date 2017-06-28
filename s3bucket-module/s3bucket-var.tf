@@ -10,9 +10,6 @@ variable "s3_logging" {
     type="string"
   default = "default"
 }
-variable "log_destination_bucket" {
-  type="string"
-}
 variable "s3_aws_region" {
   type="string"
 }
